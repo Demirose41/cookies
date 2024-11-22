@@ -2,21 +2,22 @@
 
 // For storing user's theme selection in cookies
 function storeTheme(themeName) {
-    const themeCookie = `storedTheme=${themeName}`
+    const themeCookie = `storedTheme=${themeName};max-age=30`
     document.cookie = themeCookie;
 }
 
 // For restoring theme from cookies, if selected by the user in the past
 function restoreTheme() {
-    if(document.cookie){
-        const storedTheme = document.cookie.split("=")[1]
-        setTheme(storedTheme)
+    if(document.cookie.includes("storedTheme")){
+        const storedTheme = document.cookie.split(";").filter((ele) => ele.includes("storedTheme"))
+        // debugger
+        setTheme(storedTheme[0].split("=")[1])
     }
 }
 
 // For clearing theme selection from cookies (reset to default)
 function clearTheme() {
-    document.cookie += 'storedTheme=true;expires=Fri, 31 Dec 1999 23:59:59 GMT'
+    document.cookie = 'storedTheme=;expires=Fri, 31 Dec 1999 23:59:59 GMT'
     resetTheme()
 }
 
@@ -24,17 +25,28 @@ function clearTheme() {
 
 // For storing user's display name in cookies
 function storeName(displayName) {
-    // Your code here
+    const displayNameCookie = `displayName=${displayName};max-age=30`
+    document.cookie = displayNameCookie
 }
 
 // For restoring user's display name from cookies, if set in the past
 function restoreName() {
-    // Your code here
+
+    if(document.cookie.includes("displayName")){
+
+        const displayName = 
+        document.cookie
+        .split(";")
+        .filter((ele) => ele.includes("displayName"))[0]
+        .split("=")[1]
+        
+        setInputValue("display-name", displayName)
+    }
 }
 
 // For clearing user's display name from cookies
 function clearName() {
-    // Your code here
+    document.cookie = 'displayName=;expires=Fri, 31 Dec 1999 23:59:59 GMT'
 }
 
 /* ========================================================================= */
